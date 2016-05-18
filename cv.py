@@ -10,9 +10,9 @@ def main():
 
 	im = Image.open(imgname)
 
-	samples = build_samples(im, (100, 100), 20, 100)
+	samples = build_samples(im, (185, 85), 20, 130)
 
-	show_sample_regions(im, samples, (100, 100), 20, 100) 
+	show_sample_regions(im, samples, (185, 85), 20, 130) 
 
 def build_samples(im, tls, sbw, dtas):
 	"""
