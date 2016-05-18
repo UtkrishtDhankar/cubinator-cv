@@ -1,34 +1,52 @@
 from PIL import Image, ImageFilter
 import sys
 
-# the location of the top left sample
-top_left_sample = (100, 100)
+def main():
+	imgname = ""
+	try:
+		imgname = sys.argv[1]
+	except IndexError:
+		raise ValueError("No input file name provided")
 
-# box width of the sample for the cube
-sample_box_width = 20
+	im = Image.open(imgname)
 
-distance_to_adjacent_sample = 100
+	samples = build_samples(im, (100, 100), 20, 100)
 
-imgname = ""
-try:
-	imgname = sys.argv[1]
-except IndexError:
-	raise ValueError("No input file name provided")
+	show_sample_regions(im, samples, (100, 100), 20, 100) 
 
+def build_samples(im, tls, sbw, dtas):
+	"""
+	Builds and returns samples from image
+	tls - the coordinates tuple of the top left samples
+	sbw - the sampling box' width
+	dtas - distance between two adjacent samples
+	"""
+	samples = [[None, None, None],
+	           [None, None, None],
+	           [None, None, None]]
 
-im = Image.open(imgname)
-samples = [[None, None, None],
-           [None, None, None],
-           [None, None, None]]
+	for y in range(3):
+		for x in range(3):
+			box = (tls[0] + dtas * x, tls[1] + dtas* y, tls[0] + dtas * x + sbw, tls[1] + dtas * y + sbw)
 
-for y in range(3):
-	for x in range(3):
-		box = (top_left_sample[0] + distance_to_adjacent_sample * x, top_left_sample[1] + distance_to_adjacent_sample* y, top_left_sample[0] + distance_to_adjacent_sample * x + sample_box_width, top_left_sample[1] + distance_to_adjacent_sample * y + sample_box_width)
+			samples[y][x] = im.crop(box)
 
-		samples[y][x] = im.crop(box)
+	return samples
 
-		samples[y][x] = samples[y][x].point(lambda i : i * 5)
+def show_sample_regions(im, samples, tls, sbw, dtas):
+	"""
+	Shows an image with the samples highlighted
+	"""
 
-		im.paste(samples[y][x], box)
+	for y in range(3):
+		for x in range(3):
+			box = (tls[0] + dtas * x, tls[1] + dtas* y, tls[0] + dtas * x + sbw, tls[1] + dtas * y + sbw)
 
-im.show()
+			samples[y][x] = samples[y][x].point(lambda i : i * 5)
+
+			im.paste(samples[y][x], box)
+
+	im.show()
+
+if __name__ == '__main__':
+	main()
