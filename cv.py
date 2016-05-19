@@ -4,12 +4,12 @@ import math
 
 # Simple dict as a wrapper for colors
 Colors = {
-    "red" : (250, 90, 47),
-    "blue" : (0, 175, 230),
-    "orange" : (255, 130, 47),
-    "yellow" : (170, 200, 1),
-    "white" : (254, 245, 210),
-    "green" : (12, 201, 35)
+    "red" : (124, 24, 11),
+    "blue" : (0, 74, 134),
+    "orange" : (203, 64, 35),
+    "yellow" : (110, 143, 10),
+    "white" : (116, 135, 131),
+    "green" : (0, 129, 26)
 }
 
 def main():
