@@ -39,8 +39,7 @@ def get_distance(t1, t2):
     difference = (t1[0] - t2[0], t1[1] - t2[1], t1[2] - t2[2])
     distance_sqr = 0
     for d in difference:
-        distance_sqr += difference * difference
-
+        distance_sqr += d * d
     return math.sqrt(distance_sqr)
 
 def build_samples(im, tls, sbw, dtas):
