@@ -1,6 +1,15 @@
 from PIL import Image, ImageFilter
 import sys
 
+# Simple class as a wrapper for colors
+class Colors:
+    red = (255, 0, 0)
+    blue = (0, 0, 255)
+    orange = (0, 0, 255)
+    yellow = (0, 0, 255)
+    white = (255, 255, 255)
+    green = (0, 255, 0)
+
 def main():
     imgname = ""
     try:
