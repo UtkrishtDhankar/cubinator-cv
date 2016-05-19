@@ -9,7 +9,7 @@ Colors = {
     "orange" : (0, 0, 255),
     "yellow" : (0, 0, 255),
     "white" : (255, 255, 255),
-    "green" : (0, 255, 0)
+    "green" : (12, 201, 35)
 }
 
 def main():
