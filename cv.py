@@ -1,5 +1,16 @@
 from PIL import Image, ImageFilter
 import sys
+import math
+
+# Simple dict as a wrapper for colors
+Colors = {
+    "red" : (255, 0, 0),
+    "blue" : (0, 0, 255),
+    "orange" : (0, 0, 255),
+    "yellow" : (0, 0, 255),
+    "white" : (255, 255, 255),
+    "green" : (0, 255, 0)
+}
 
 def main():
     imgname = ""
@@ -14,9 +25,38 @@ def main():
 
     show_sample_regions(im, samples, (185, 85), 20, 130)
 
+    sample_colors = {}
     for y in range(3):
         for x in range(3):
-            print "{}, {}:".format(str(x), str(y)), get_color(samples[y][x])
+            sample_colors[(x, y)] = get_color(samples[y][x])
+            print "(" + str(x) + ", " + str(y) + "):", get_string_color(sample_colors[(x, y)])
+
+
+def get_string_color (color):
+    """
+    For an RGB tuple color, returns the color from the dict Colors that is closest to it
+    """
+
+    closest = ""
+    closest_dist = 1000000 # really really large distance
+
+    for key in Colors:
+        new_dist = get_distance(color, Colors[key])
+        if new_dist < closest_dist:
+            closest_dist = new_dist
+            closest = key
+
+    return closest
+
+def get_distance(t1, t2):
+    """
+    Returns the distance between the two tuples t1 and t2
+    """
+    difference = (t1[0] - t2[0], t1[1] - t2[1], t1[2] - t2[2])
+    distance_sqr = 0
+    for d in difference:
+        distance_sqr += d * d
+    return math.sqrt(distance_sqr)
 
 def build_samples(im, tls, sbw, dtas):
     """
