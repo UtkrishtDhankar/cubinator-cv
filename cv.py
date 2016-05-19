@@ -1,5 +1,6 @@
 from PIL import Image, ImageFilter
 import sys
+import math
 
 # Simple class as a wrapper for colors
 class Colors:
@@ -26,6 +27,17 @@ def main():
     for y in range(3):
         for x in range(3):
             print "{}, {}:".format(str(x), str(y)), get_color(samples[y][x])
+
+def get_distance(t1, t2):
+    """
+    Returns the distance between the two tuples t1 and t2
+    """
+    difference = (t1[0] - t2[0], t1[1] - t2[1], t1[2] - t2[2])
+    distance_sqr = 0
+    for d in difference:
+        distance_sqr += difference * difference
+
+    return math.sqrt(distance_sqr)
 
 def build_samples(im, tls, sbw, dtas):
     """
