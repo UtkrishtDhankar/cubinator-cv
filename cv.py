@@ -4,7 +4,7 @@ import math
 
 # Simple dict as a wrapper for colors
 Colors = {
-    "red" : (255, 0, 0),
+    "red" : (250, 90, 47),
     "blue" : (0, 175, 230),
     "orange" : (0, 0, 255),
     "yellow" : (0, 0, 255),
