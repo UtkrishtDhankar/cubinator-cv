@@ -29,8 +29,24 @@ def main():
     for y in range(3):
         for x in range(3):
             sample_colors[(x, y)] = get_color(samples[y][x])
-            print "(" + str(x) + ", " + str(y) + "):", sample_colors[(x, y)]
+            print "(" + str(x) + ", " + str(y) + "):", get_string_color(sample_colors[(x, y)])
 
+
+def get_string_color (color):
+    """
+    For an RGB tuple color, returns the color from the dict Colors that is closest to it
+    """
+
+    closest = ""
+    closest_dist = 1000000 # really really large distance
+
+    for key in Colors:
+        new_dist = get_distance(color, Colors[key])
+        if new_dist < closest_dist:
+            closest_dist = new_dist
+            closest = key
+
+    return closest
 
 def get_distance(t1, t2):
     """
