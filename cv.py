@@ -2,14 +2,15 @@ from PIL import Image, ImageFilter
 import sys
 import math
 
-# Simple class as a wrapper for colors
-class Colors:
-    red = (255, 0, 0)
-    blue = (0, 0, 255)
-    orange = (0, 0, 255)
-    yellow = (0, 0, 255)
-    white = (255, 255, 255)
-    green = (0, 255, 0)
+# Simple dict as a wrapper for colors
+Colors = {
+    "red" : (255, 0, 0)
+    "blue" : (0, 0, 255)
+    "orange" : (0, 0, 255)
+    "yellow" : (0, 0, 255)
+    "white" : (255, 255, 255)
+    "green" : (0, 255, 0)
+}
 
 def main():
     imgname = ""
@@ -24,9 +25,12 @@ def main():
 
     show_sample_regions(im, samples, (185, 85), 20, 130)
 
+    sample_colors = {}
     for y in range(3):
         for x in range(3):
-            print "{}, {}:".format(str(x), str(y)), get_color(samples[y][x])
+            sample_colors[(x, y)] = get_color(samples[y][x])
+            print "(" + str(x) + ", " + str(y) + "):", sample_colors[(x, y)]
+
 
 def get_distance(t1, t2):
     """
