@@ -4,11 +4,11 @@ import math
 
 # Simple dict as a wrapper for colors
 Colors = {
-    "red" : (255, 0, 0)
-    "blue" : (0, 0, 255)
-    "orange" : (0, 0, 255)
-    "yellow" : (0, 0, 255)
-    "white" : (255, 255, 255)
+    "red" : (255, 0, 0),
+    "blue" : (0, 0, 255),
+    "orange" : (0, 0, 255),
+    "yellow" : (0, 0, 255),
+    "white" : (255, 255, 255),
     "green" : (0, 255, 0)
 }
 
