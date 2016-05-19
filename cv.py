@@ -41,14 +41,19 @@ def show_sample_regions(im, samples, tls, sbw, dtas):
     """
     Shows an image with the samples highlighted
     """
+    new_im = im
+
+    new_samples = [[None, None, None],
+                  [None, None, None],
+                  [None, None, None]]
 
     for y in range(3):
         for x in range(3):
             box = (tls[0] + dtas * x, tls[1] + dtas* y, tls[0] + dtas * x + sbw, tls[1] + dtas * y + sbw)
 
-            samples[y][x] = samples[y][x].point(lambda i : i * 5)
+            new_samples[y][x] = samples[y][x].point(lambda i : i * 5)
 
-            im.paste(samples[y][x], box)
+            new_im.paste(new_samples[y][x], box)
 
     im.show()
 
