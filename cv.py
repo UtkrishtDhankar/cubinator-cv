@@ -19,6 +19,10 @@ def main():
     except IndexError:
         raise ValueError("No input file name provided")
 
+    print return_face_colors(imgname)
+
+
+def return_face_colors(imgname):
     im = Image.open(imgname)
 
     samples = build_samples(im, (185, 85), 20, 130)
@@ -26,11 +30,13 @@ def main():
     show_sample_regions(im, samples, (185, 85), 20, 130)
 
     sample_colors = {}
+    sample_string_colors = {}
     for y in range(3):
         for x in range(3):
             sample_colors[(x, y)] = get_color(samples[y][x])
-            print "(" + str(x) + ", " + str(y) + "):", get_string_color(sample_colors[(x, y)])
+            sample_string_colors[(x, y)] = get_string_color(sample_colors[(x, y)])
 
+    return sample_string_colors
 
 def get_string_color (color):
     """
