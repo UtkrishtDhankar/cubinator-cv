@@ -1,16 +1,17 @@
-from PIL import Image, ImageFilter
+from PIL import Image
 import sys
 import math
 
 # Simple dict as a wrapper for colors
 Colors = {
-    "red" : (255, 0, 0),
-    "blue" : (0, 0, 255),
-    "orange" : (0, 0, 255),
-    "yellow" : (0, 0, 255),
-    "white" : (255, 255, 255),
-    "green" : (0, 255, 0)
+    "red": (124, 24, 11),
+    "blue": (0, 74, 134),
+    "orange": (203, 64, 35),
+    "yellow": (110, 143, 10),
+    "white": (116, 135, 131),
+    "green": (0, 129, 26)
 }
+
 
 def main():
     imgname = ""
@@ -19,6 +20,10 @@ def main():
     except IndexError:
         raise ValueError("No input file name provided")
 
+    print return_face_colors(imgname)
+
+
+def return_face_colors(imgname):
     im = Image.open(imgname)
 
     samples = build_samples(im, (185, 85), 20, 130)
@@ -26,19 +31,24 @@ def main():
     show_sample_regions(im, samples, (185, 85), 20, 130)
 
     sample_colors = {}
+    sample_string_colors = {}
     for y in range(3):
         for x in range(3):
             sample_colors[(x, y)] = get_color(samples[y][x])
-            print "(" + str(x) + ", " + str(y) + "):", get_string_color(sample_colors[(x, y)])
+            sample_string_colors[(x, y)] \
+                = get_string_color(sample_colors[(x, y)])
+
+    return sample_string_colors
 
 
-def get_string_color (color):
+def get_string_color(color):
     """
-    For an RGB tuple color, returns the color from the dict Colors that is closest to it
+    For an RGB tuple color
+    Returns the color from the dict Colors that is closest to it
     """
 
     closest = ""
-    closest_dist = 1000000 # really really large distance
+    closest_dist = 1000000  # really really large distance
 
     for key in Colors:
         new_dist = get_distance(color, Colors[key])
@@ -47,6 +57,7 @@ def get_string_color (color):
             closest = key
 
     return closest
+
 
 def get_distance(t1, t2):
     """
@@ -57,6 +68,7 @@ def get_distance(t1, t2):
     for d in difference:
         distance_sqr += d * d
     return math.sqrt(distance_sqr)
+
 
 def build_samples(im, tls, sbw, dtas):
     """
@@ -71,11 +83,13 @@ def build_samples(im, tls, sbw, dtas):
 
     for y in range(3):
         for x in range(3):
-            box = (tls[0] + dtas * x, tls[1] + dtas* y, tls[0] + dtas * x + sbw, tls[1] + dtas * y + sbw)
+            box = (tls[0] + dtas * x, tls[1] + dtas * y,
+                   tls[0] + dtas * x + sbw, tls[1] + dtas * y + sbw)
 
             samples[y][x] = im.crop(box)
 
     return samples
+
 
 def show_sample_regions(im, samples, tls, sbw, dtas):
     """
@@ -84,18 +98,20 @@ def show_sample_regions(im, samples, tls, sbw, dtas):
     new_im = im
 
     new_samples = [[None, None, None],
-                  [None, None, None],
-                  [None, None, None]]
+                   [None, None, None],
+                   [None, None, None]]
 
     for y in range(3):
         for x in range(3):
-            box = (tls[0] + dtas * x, tls[1] + dtas* y, tls[0] + dtas * x + sbw, tls[1] + dtas * y + sbw)
+            box = (tls[0] + dtas * x, tls[1] + dtas * y,
+                   tls[0] + dtas * x + sbw, tls[1] + dtas * y + sbw)
 
-            new_samples[y][x] = samples[y][x].point(lambda i : i * 5)
+            new_samples[y][x] = samples[y][x].point(lambda i: i * 5)
 
             new_im.paste(new_samples[y][x], box)
 
     im.show()
+
 
 def get_color(im):
     colors = im.getcolors(1024)
