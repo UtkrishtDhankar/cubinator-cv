@@ -1,4 +1,4 @@
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 import sys
 import math
 
@@ -106,7 +106,10 @@ def show_sample_regions(im, samples, tls, sbw, dtas):
             box = (tls[0] + dtas * x, tls[1] + dtas * y,
                    tls[0] + dtas * x + sbw, tls[1] + dtas * y + sbw)
 
-            new_samples[y][x] = samples[y][x].point(lambda i: i * 5)
+            new_samples[y][x] = samples[y][x]
+
+            draw = ImageDraw.Draw(new_samples[y][x])
+            draw.text((0, 0), get_string_color(get_color(new_samples[y][x])))
 
             new_im.paste(new_samples[y][x], box)
 
